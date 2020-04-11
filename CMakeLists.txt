@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.15)
+project(Qt)
+
+SET(QT5_MODULES Widgets PrintSupport Network XmlPatterns)
+set(CMAKE_CXX_STANDARD 20)
+set(SOURCE_FILES main.cpp infowidget.cpp lsystem.cpp lsystemprinter.cpp lsystemwidget.cpp mainwindow.cpp setupwidget.cpp)
+set(CMAKE_PREFIX_PATH "/usr/local/Cellar/qt/5.14.1")
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+find_package( Qt5Core REQUIRED )
+find_package( Qt5Widgets REQUIRED )
+find_package( Qt5Gui REQUIRED )
+find_package( Qt5Network REQUIRED )
+find_package( Qt5Sql REQUIRED )
+find_package( Qt5Xml REQUIRED )
+find_package( Qt5PrintSupport REQUIRED )
+
+add_executable(Qt ${SOURCE_FILES})
+
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Network Qt5::Sql Qt5::PrintSupport)
