@@ -11,12 +11,12 @@ LSystem::LSystem(string const &s, MapOneRuleType const &mo, MapNoRuleType const 
                                                                                        rules_no_arg_(mn) {
 }
 
-void LSystem::ParseRule(string const &str) {
+bool LSystem::ParseRule(string const &str) {
     std::regex regex("(.+)=(.*):(.+)");
     std::smatch match;
     std::regex_match(str, match, regex);
     if (match.empty()) {
-        return;
+        return false;
     }
     std::cout << match.size() << '\n';
     for (auto &&el : match) {
@@ -31,24 +31,25 @@ void LSystem::ParseRule(string const &str) {
         std::string param_name = temp[2];
         std::string ret = match[3];
         auto condition = ParseCondition(match[2], param_name[0]);
-        AddRule(func_name[0], [condition, ret](char, bool &b, int x) -> string {
+        return AddRule(func_name[0], [condition, ret](char, bool &b, int x) -> string {
             b = condition(x);
             return ret;
         });
     } else {
         std::string ret = match[3];
-        AddRule(function_match.at(0), [ret](char) {
+        return AddRule(function_match.at(0), [ret](char) {
             return ret;
         });
     }
 }
 
-void LSystem::AddRule(char c, OneRuleType const &r) {
+bool LSystem::AddRule(char c, OneRuleType const &r) {
     rules_1_arg_[c].push_back(r);
+    return true;
 }
 
-void LSystem::AddRule(char c, NoRuleType const &r) {
-    rules_no_arg_.insert(make_pair(c, r));
+bool LSystem::AddRule(char c, NoRuleType const &r) {
+    return rules_no_arg_.insert(make_pair(c, r)).second;
 }
 
 LSystem::MapNoRuleType const &LSystem::ShowNoArg() const {

@@ -23,9 +23,9 @@ public:
 
     LSystem(string const& = "", MapOneRuleType const & = {}, MapNoRuleType const & = {});
 
-    void ParseRule(string const&);
-    void AddRule(char, OneRuleType const &);
-    void AddRule(char, NoRuleType const &);
+    bool ParseRule(string const&);
+    bool AddRule(char, OneRuleType const &);
+    bool AddRule(char, NoRuleType const &);
     MapNoRuleType const &ShowNoArg() const;
     MapOneRuleType const &ShowOneArg() const;
     void SetString(string const &);

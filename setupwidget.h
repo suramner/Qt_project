@@ -24,6 +24,7 @@ private slots:
     void addRule();
     void setStart();
     void updateLSystem();
+    void clear();
 
 private:
     QVBoxLayout *widget_;
